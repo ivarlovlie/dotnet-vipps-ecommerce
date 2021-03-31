@@ -1,6 +1,5 @@
 Implements https://vippsas.github.io/vipps-ecom-api/, more or less (see [IVippsEcommerceService.cs](https://github.com/ivarlovlie/IOL.VippsEcommerce/blob/master/src/IOL.VippsEcommerce/IVippsEcommerceService.cs)).
 
-## Install
 `dotnet add package IOL.VippsEcommerce`
 
 ![IOL.VippsEcommerce on nuget.org](https://img.shields.io/badge/target:-dotnet5.0-blue)

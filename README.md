@@ -1,3 +1,5 @@
+Implements https://vippsas.github.io/vipps-ecom-api/, more or less.
+
 ## Install
 `dotnet add package IOL.VippsEcommerce`
 

@@ -1,3 +1,5 @@
+Implements https://vippsas.github.io/vipps-ecom-api/, more or less.
+
 ## Install
 `dotnet add package IOL.VippsEcommerce`
 
@@ -7,7 +9,7 @@ The service targets net5.0. \
 
 ## Configuration
 
-Use DI to add and configure the service to your liking, example:
+Use Dependency Injection to add and configure the service to your liking, example:
 ```csharp
 services.AddVippsEcommerceService(o => {
 	o.ApiUrl = "";
@@ -18,14 +20,14 @@ services.AddVippsEcommerceService(o => {
 ```
 
 See [VippsConfiguration.cs](https://github.com/ivarlovlie/IOL.VippsEcommerce/blob/master/src/IOL.VippsEcommerce/Models/VippsConfiguration.cs) for available properties.
-You can also use environment variables to configure the service, example:
+You can configure how to get values with the `ConfigurationMode` property, valid modes is specified in [VippsConfigurationMode.cs](https://github.com/ivarlovlie/IOL.VippsEcommerce/blob/master/src/IOL.VippsEcommerce/Models/VippsConfigurationMode.cs), example:
 ```csharp
 services.AddVippsEcommerceService(o => {
-	o.UseEnvironment = true;
+	o.ConfigurationMode = VippsConfigurationMode.ENVIRONMENT_THEN_OBJECT;
 });
 ```
 
-With the above example, the service will look for configuration values in the current environment using names specified in [VippsConfigurationKeyNames.cs](https://github.com/ivarlovlie/IOL.VippsEcommerce/blob/master/src/IOL.VippsEcommerce/Models/VippsConfigurationKeyNames.cs). The environment variable name for a given property is also specified in it's XML-documentation.
+With the above example, the service will look for configuration values in the current environment using names specified in [VippsConfigurationKeyNames.cs](https://github.com/ivarlovlie/IOL.VippsEcommerce/blob/master/src/IOL.VippsEcommerce/Models/VippsConfigurationKeyNames.cs), then in the configuration object. The environment variable name for a given property is also specified in it's XML-documentation.
 
 
 ## Caching

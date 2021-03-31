@@ -30,7 +30,7 @@ namespace IOL.VippsEcommerce
 		private string CacheFilePath => Path.Combine(_cacheFileDirectoryPath, VIPPS_CACHE_FILE_NAME);
 		public VippsConfiguration Configuration { get; }
 
-		internal VippsEcommerceService(
+		public VippsEcommerceService(
 			HttpClient client,
 			ILogger<VippsEcommerceService> logger,
 			IOptions<VippsConfiguration> options

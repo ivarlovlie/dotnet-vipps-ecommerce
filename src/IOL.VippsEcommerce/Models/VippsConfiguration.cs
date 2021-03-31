@@ -98,8 +98,7 @@ namespace IOL.VippsEcommerce.Models
 		public string CacheEncryptionKey { get; set; }
 
 		/// <summary>
-		/// Use environment variables for configuration.
-		/// <para>If this is true, all requested properties are looked for in the environment.</para>
+		/// Specify how to retrieve configuration and/or in what order. Defaults to VippsConfigurationMode.ONLY_OBJECT.
 		/// </summary>
 		public VippsConfigurationMode ConfigurationMode { get; set; } = VippsConfigurationMode.ONLY_OBJECT;
 
@@ -107,7 +106,7 @@ namespace IOL.VippsEcommerce.Models
 		/// Get value from configuration, either from Dependency injection or from the environment.
 		/// </summary>
 		/// <param name="key">Configuration key.</param>
-		/// <returns>A string containing the configuration value (or a fallback).</returns>
+		/// <returns>A string containing the configuration value.</returns>
 		public string GetValue(string key) {
 			switch (ConfigurationMode) {
 				case VippsConfigurationMode.ONLY_OBJECT:

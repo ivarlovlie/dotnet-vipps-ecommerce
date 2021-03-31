@@ -6,15 +6,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 var services = new ServiceCollection();
 services.AddVippsEcommerceService(o => {
-	o.ApiUrl = "";
-	o.PrimarySubscriptionKey = "";
-	o.ClientSecret = "";
-	o.ClientId = "";
-	o.CacheEncryptionKey = "";
-	o.CacheDirectoryPath = "";
-	o.ConfigurationMode = VippsConfigurationMode.ONLY_OBJECT;
+	o.ConfigurationMode = VippsConfigurationMode.ONLY_ENVIRONMENT;
 });
 var provider = services.BuildServiceProvider();
 var vippsEcommerceService = provider.GetService<IVippsEcommerceService>();
-var res = vippsEcommerceService?.GetPaymentDetailsAsync("asdf").Result;
-Console.WriteLine(JsonSerializer.Serialize(res));
+if (vippsEcommerceService == default) {
+	return;
+}
+
+Console.WriteLine(JsonSerializer.Serialize(vippsEcommerceService.Configuration));

@@ -2,8 +2,8 @@
 `dotnet add package IOL.VippsEcommerce`
 
 The service targets net5.0. \
-[Nuget page](https://www.nuget.org/packages/IOL.VippsEcommerce/)
-[Fuget page](https://www.fuget.org/packages/IOL.VippsEcommerce/)
+[Nuget page](https://nuget.org/packages/IOL.VippsEcommerce/)
+[Fuget page](https://fuget.org/packages/IOL.VippsEcommerce/)
 
 ## Configuration
 

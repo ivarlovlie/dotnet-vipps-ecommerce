@@ -13,8 +13,10 @@ using Microsoft.Extensions.Options;
 
 namespace IOL.VippsEcommerce
 {
+	/// <summary>
+	/// The main class for interacting with the vipps api.
+	/// </summary>
 	public class VippsEcommerceService : IVippsEcommerceService
-
 	{
 		private readonly HttpClient _client;
 		private readonly ILogger<VippsEcommerceService> _logger;
@@ -26,14 +28,15 @@ namespace IOL.VippsEcommerce
 
 		private const string VIPPS_CACHE_FILE_NAME = "vipps_ecommerce_credentials.json";
 		private string CacheFilePath => Path.Combine(_cacheFileDirectoryPath, VIPPS_CACHE_FILE_NAME);
+		public VippsConfiguration Configuration { get; }
 
-		public VippsEcommerceService(
+		internal VippsEcommerceService(
 			HttpClient client,
 			ILogger<VippsEcommerceService> logger,
 			IOptions<VippsConfiguration> options
 		) {
-			var configuration = options.Value;
-			var vippsApiUrl = configuration.GetValue(VippsConfigurationKeyNames.VIPPS_API_URL);
+			Configuration = options.Value;
+			var vippsApiUrl = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_API_URL);
 			if (vippsApiUrl.IsNullOrWhiteSpace()) {
 				throw new ArgumentException("VippsEcommerceService: Api url is not provided in configuration.");
 			}
@@ -42,20 +45,20 @@ namespace IOL.VippsEcommerce
 			_client = client;
 			_logger = logger;
 
-			_vippsClientId = configuration.GetValue(VippsConfigurationKeyNames.VIPPS_CLIENT_ID);
+			_vippsClientId = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_CLIENT_ID);
 			if (_vippsClientId.IsNullOrWhiteSpace()) {
 				throw new ArgumentException("VippsEcommerceService: Client id is not provided in configuration.");
 			}
 
-			_vippsClientSecret = configuration.GetValue(VippsConfigurationKeyNames.VIPPS_CLIENT_SECRET);
+			_vippsClientSecret = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_CLIENT_SECRET);
 			if (_vippsClientSecret.IsNullOrWhiteSpace()) {
 				throw new ArgumentException("VippsEcommerceService: Client secret is not provided in configuration.");
 			}
 
 			var primarySubscriptionKey =
-				configuration.GetValue(VippsConfigurationKeyNames.VIPPS_SUBSCRIPTION_KEY_PRIMARY);
+				Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_SUBSCRIPTION_KEY_PRIMARY);
 			var secondarySubscriptionKey =
-				configuration.GetValue(VippsConfigurationKeyNames.VIPPS_SUBSCRIPTION_KEY_SECONDARY);
+				Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_SUBSCRIPTION_KEY_SECONDARY);
 			if (primarySubscriptionKey.IsNullOrWhiteSpace() && secondarySubscriptionKey.IsNullOrWhiteSpace()) {
 				throw new
 					ArgumentException("VippsEcommerceService: Neither primary nor secondary subscription key was provided in configuration.");
@@ -64,34 +67,34 @@ namespace IOL.VippsEcommerce
 			client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key",
 			                                 primarySubscriptionKey ?? secondarySubscriptionKey);
 
-			var msn = configuration.GetValue(VippsConfigurationKeyNames.VIPPS_MSN);
+			var msn = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_MSN);
 			if (msn.IsPresent()) {
 				client.DefaultRequestHeaders.Add("Merchant-Serial-Number", msn);
 				_vippsMsn = msn;
 			}
 
-			var systemName = configuration.GetValue(VippsConfigurationKeyNames.VIPPS_SYSTEM_NAME);
+			var systemName = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_SYSTEM_NAME);
 			if (systemName.IsPresent()) {
 				client.DefaultRequestHeaders.Add("Vipps-System-Name", systemName);
 			}
 
-			var systemVersion = configuration.GetValue(VippsConfigurationKeyNames.VIPPS_SYSTEM_VERSION);
+			var systemVersion = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_SYSTEM_VERSION);
 			if (systemVersion.IsPresent()) {
 				client.DefaultRequestHeaders.Add("Vipps-System-Version", systemVersion);
 			}
 
-			var systemPluginName = configuration.GetValue(VippsConfigurationKeyNames.VIPPS_SYSTEM_PLUGIN_NAME);
+			var systemPluginName = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_SYSTEM_PLUGIN_NAME);
 			if (systemPluginName.IsPresent()) {
 				client.DefaultRequestHeaders.Add("Vipps-System-Plugin-Name", systemPluginName);
 			}
 
-			var systemPluginVersion = configuration.GetValue(VippsConfigurationKeyNames.VIPPS_SYSTEM_PLUGIN_VERSION);
+			var systemPluginVersion = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_SYSTEM_PLUGIN_VERSION);
 			if (systemPluginVersion.IsPresent()) {
 				client.DefaultRequestHeaders.Add("Vipps-System-Plugin-Version", systemPluginVersion);
 			}
 
-			_cacheEncryptionKey = configuration.GetValue(VippsConfigurationKeyNames.VIPPS_CACHE_KEY);
-			_cacheFileDirectoryPath = configuration.GetValue(VippsConfigurationKeyNames.VIPPS_CACHE_PATH);
+			_cacheEncryptionKey = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_CACHE_KEY);
+			_cacheFileDirectoryPath = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_CACHE_PATH);
 			if (_cacheFileDirectoryPath.IsPresent()) {
 				if (!_cacheFileDirectoryPath.IsDirectoryWritable()) {
 					_logger.LogError("Could not write to cache file directory ("

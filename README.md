@@ -9,7 +9,7 @@ The service targets net5.0. \
 
 ## Configuration
 
-Use DI to add and configure the service to your liking, example:
+Use Dependency Injection to add and configure the service to your liking, example:
 ```csharp
 services.AddVippsEcommerceService(o => {
 	o.ApiUrl = "";

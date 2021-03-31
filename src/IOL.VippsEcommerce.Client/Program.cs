@@ -9,6 +9,8 @@ services.AddVippsEcommerceService(o => {
 	o.PrimarySubscriptionKey = "";
 	o.ClientSecret = "";
 	o.ClientId = "";
+	o.CacheEncryptionKey = "";
+	o.CredentialsCacheFilePath = "";
 });
 var provider = services.BuildServiceProvider();
 var vippsEcommerceService = provider.GetService<IVippsEcommerceService>();

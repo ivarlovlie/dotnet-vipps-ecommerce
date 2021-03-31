@@ -114,11 +114,13 @@ namespace IOL.VippsEcommerce.Models
 				foreach (var attribute in prop.CustomAttributes) {
 					foreach (var argument in attribute.ConstructorArguments) {
 						if (argument.Value as string == key) {
-							var value = prop.GetValue(this, null)?.ToString();
 #if DEBUG
+							var value = prop.GetValue(this, null)?.ToString();
 							Console.WriteLine("Key: " + key + " Value: " + value);
-#endif
 							return value;
+#else
+							return prop.GetValue(this, null)?.ToString();
+#endif
 						}
 					}
 				}

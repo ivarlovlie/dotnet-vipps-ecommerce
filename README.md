@@ -30,7 +30,7 @@ services.AddVippsEcommerceService(o => {
 With the above example, the service will look for configuration values in the current environment using names specified in [VippsConfigurationKeyNames.cs](https://github.com/ivarlovlie/IOL.VippsEcommerce/blob/master/src/IOL.VippsEcommerce/Models/VippsConfigurationKeyNames.cs), then in the configuration object. The environment variable name for a given property is also specified in it's XML-documentation.
 
 
-> [Environment.GetEnvironmentVariable](https://docs.microsoft.com/en-us/dotnet/api/system.environment.getenvironmentvariable?view=net-5.0) is used to retrieve environement variables, that means that user-secrets and anything else than process-spesific variables (`VARIABLE=value dotnet YourBinary.dll`) does not register on Unix systems.
+> [Environment.GetEnvironmentVariable](https://docs.microsoft.com/en-us/dotnet/api/system.environment.getenvironmentvariable?view=net-5.0) is used to retrieve environment variables, that means that user-secrets and anything else than process-spesific variables (`VARIABLE=value dotnet YourBinary.dll`) does not register on Unix systems.
 
 
 ## Caching

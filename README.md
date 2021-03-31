@@ -33,7 +33,7 @@ With the above example, the service will look for configuration values in the cu
 The service can cache the credentials for api-access in a file with optional AES encryption, example:
 ```csharp
 services.AddVippsEcommerceService(o => {
-	o.CacheEncryptionKey = "randomstring"; // optional
-	o.CredentialsCacheFilePath = "/tmp/vippsecom"; // path to directory that the executing process has write-access to
+	o.CacheEncryptionKey = "randomstring"; // optional key for AES encryption, if omitted the cache will be readable json with your keys exposed and everything.
+	o.CacheDirectoryPath = "/tmp/vippsecom"; // path to a directory that the executing process has write-access to.
 });
 ```

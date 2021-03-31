@@ -101,19 +101,29 @@ namespace IOL.VippsEcommerce.Models
 		/// Use environment variables for configuration.
 		/// <para>If this is true, all requested properties are looked for in the environment.</para>
 		/// </summary>
-		public bool UseEnvironment { get; set; }
+		public VippsConfigurationMode ConfigurationMode { get; set; } = VippsConfigurationMode.ONLY_OBJECT;
 
 		/// <summary>
 		/// Get value from configuration, either from Dependency injection or from the environment.
 		/// </summary>
 		/// <param name="key">Configuration key.</param>
-		/// <param name="fallback">Fallback value if the key is not found or empty.</param>
 		/// <returns>A string containing the configuration value (or a fallback).</returns>
-		public string GetValue(string key, string fallback = default) {
-			if (UseEnvironment) {
-				return Environment.GetEnvironmentVariable(key) ?? fallback;
+		public string GetValue(string key) {
+			switch (ConfigurationMode) {
+				case VippsConfigurationMode.ONLY_OBJECT:
+					return GetValueFromObject(key);
+				case VippsConfigurationMode.ONLY_ENVIRONMENT:
+					return Environment.GetEnvironmentVariable(key);
+				case VippsConfigurationMode.OBJECT_THEN_ENVIRONMENT:
+					return GetValueFromObject(key) ?? Environment.GetEnvironmentVariable(key);
+				case VippsConfigurationMode.ENVIRONMENT_THEN_OBJECT:
+					return Environment.GetEnvironmentVariable(key) ?? GetValueFromObject(key);
+				default:
+					return default;
 			}
+		}
 
+		private string GetValueFromObject(string key) {
 			foreach (var prop in typeof(VippsConfiguration).GetProperties()) {
 				foreach (var attribute in prop.CustomAttributes) {
 					foreach (var argument in attribute.ConstructorArguments) {

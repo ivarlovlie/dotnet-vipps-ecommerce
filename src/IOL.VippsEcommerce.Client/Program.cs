@@ -10,7 +10,7 @@ services.AddVippsEcommerceService(o => {
 	o.ClientSecret = "";
 	o.ClientId = "";
 	o.CacheEncryptionKey = "";
-	o.CredentialsCacheFilePath = "";
+	o.CacheDirectoryPath = "";
 });
 var provider = services.BuildServiceProvider();
 var vippsEcommerceService = provider.GetService<IVippsEcommerceService>();

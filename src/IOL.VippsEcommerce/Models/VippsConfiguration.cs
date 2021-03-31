@@ -8,7 +8,7 @@ namespace IOL.VippsEcommerce.Models
 	public class VippsConfiguration
 	{
 		/// <summary>
-		/// Url for the vipps api.
+		/// Url for the vipps api. This property is required.
 		/// <example>https://apitest.vipps.no</example>
 		/// <example>https://api.vipps.no</example>
 		/// <para>Corresponding environment variable name: VIPPS_API_URL</para>
@@ -17,28 +17,32 @@ namespace IOL.VippsEcommerce.Models
 		public string ApiUrl { get; set; }
 
 		/// <summary>
-		/// Client ID for the merchant (the "username")
+		/// Client ID for the merchant (the "username"). This property is required.
 		/// <para>Corresponding environment variable name: VIPPS_CLIENT_ID</para>
 		/// </summary>
 		[VippsConfigurationKeyName(VippsConfigurationKeyNames.VIPPS_CLIENT_ID)]
 		public string ClientId { get; set; }
 
 		/// <summary>
-		/// Client Secret for the merchant (the "password")
+		/// Client Secret for the merchant (the "password"). This property is required.
 		/// <para>Corresponding environment variable name: VIPPS_CLIENT_SECRET</para>
 		/// </summary>
 		[VippsConfigurationKeyName(VippsConfigurationKeyNames.VIPPS_CLIENT_SECRET)]
 		public string ClientSecret { get; set; }
 
 		/// <summary>
-		///	Primary subscription key for the API product. The primary subscription key take precedence over the secondary subscription key.
+		///	Primary subscription key for the API product.
+		/// <para>The primary subscription key take precedence over the secondary subscription key.</para>
+		/// <para>Either primary subscription key or secondary subscription key is required.</para>
 		/// <para>Corresponding environment variable name: VIPPS_SUBSCRIPTION_KEY_PRIMARY</para>
 		/// </summary>
 		[VippsConfigurationKeyName(VippsConfigurationKeyNames.VIPPS_SUBSCRIPTION_KEY_PRIMARY)]
 		public string PrimarySubscriptionKey { get; set; }
 
 		/// <summary>
-		///	Secondary subscription key for the API product. The primary subscription key take precedence over the secondary subscription key.
+		///	Secondary subscription key for the API product.
+		/// <para>The primary subscription key take precedence over the secondary subscription key.</para>
+		/// <para>Either primary subscription key or secondary subscription key is required.</para>
 		/// <para>Corresponding environment variable name: VIPPS_SUBSCRIPTION_KEY_SECONDARY</para>
 		/// </summary>
 		[VippsConfigurationKeyName(VippsConfigurationKeyNames.VIPPS_SUBSCRIPTION_KEY_SECONDARY)]
@@ -84,7 +88,7 @@ namespace IOL.VippsEcommerce.Models
 		/// <para>Corresponding environment variable name: VIPPS_CACHE_PATH</para>
 		/// </summary>
 		[VippsConfigurationKeyName(VippsConfigurationKeyNames.VIPPS_CACHE_PATH)]
-		public string CredentialsCacheFilePath { get; set; }
+		public string CacheDirectoryPath { get; set; }
 
 		/// <summary>
 		/// Optional key for AES encryption of the credential cache file.

@@ -27,7 +27,7 @@ services.AddVippsEcommerceService(o => {
 });
 ```
 
-With the above example, the service will look for configuration values in the current environment using names specified in [VippsConfigurationKeyNames.cs](https://github.com/ivarlovlie/IOL.VippsEcommerce/blob/master/src/IOL.VippsEcommerce/Models/VippsConfigurationKeyNames.cs). The environment variable name for a given property is also specified in it's XML-documentation.
+With the above example, the service will look for configuration values in the current environment using names specified in [VippsConfigurationKeyNames.cs](https://github.com/ivarlovlie/IOL.VippsEcommerce/blob/master/src/IOL.VippsEcommerce/Models/VippsConfigurationKeyNames.cs), then in the configuration object. The environment variable name for a given property is also specified in it's XML-documentation.
 
 
 ## Caching

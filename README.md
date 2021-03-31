@@ -1,6 +1,3 @@
-# IOL.VippsEcommerce
-
-
 ## Install
 `dotnet add package IOL.VippsEcommerce --version 1.0.0`
 

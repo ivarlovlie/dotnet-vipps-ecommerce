@@ -11,8 +11,8 @@
         <RepositoryType>git</RepositoryType>
         <PackageTags>dotnet;vipps-api</PackageTags>
         <TargetFramework>net5.0</TargetFramework>
-        <PackageVersion>1.0.6</PackageVersion>
-        <PackageReleaseNotes>Expose configuration object</PackageReleaseNotes>
+        <PackageVersion>1.0.7</PackageVersion>
+        <PackageReleaseNotes></PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

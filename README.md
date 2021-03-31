@@ -18,10 +18,10 @@ services.AddVippsEcommerceService(o => {
 ```
 
 See [VippsConfiguration.cs](https://github.com/ivarlovlie/IOL.VippsEcommerce/blob/master/src/IOL.VippsEcommerce/Models/VippsConfiguration.cs) for available properties.
-You can also use environment variables to configure the service, example:
+You can configure how to get values with the `ConfigurationMode` property, valid modes is specified in [VippsConfigurationMode.cs](https://github.com/ivarlovlie/IOL.VippsEcommerce/blob/master/src/IOL.VippsEcommerce/Models/VippsConfigurationMode.cs), example:
 ```csharp
 services.AddVippsEcommerceService(o => {
-	o.UseEnvironment = true;
+	o.ConfigurationMode = VippsConfigurationMode.ENVIRONMENT_THEN_OBJECT;
 });
 ```
 

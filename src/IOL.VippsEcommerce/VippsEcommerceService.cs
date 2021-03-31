@@ -24,8 +24,8 @@ namespace IOL.VippsEcommerce
 		private readonly string _cacheEncryptionKey;
 		private readonly string _cacheFileDirectoryPath;
 
-		private const string CACHE_FILE_NAME = "vipps_ecommerce_credentials.json";
-		private string CacheFilePath => Path.Combine(_cacheFileDirectoryPath, CACHE_FILE_NAME);
+		private const string VIPPS_CACHE_FILE_NAME = "vipps_ecommerce_credentials.json";
+		private string CacheFilePath => Path.Combine(_cacheFileDirectoryPath, VIPPS_CACHE_FILE_NAME);
 
 		public VippsEcommerceService(
 			HttpClient client,

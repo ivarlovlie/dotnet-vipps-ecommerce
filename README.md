@@ -1,5 +1,5 @@
 ## Install
-`dotnet add package IOL.VippsEcommerce --version 1.0.0`
+`dotnet add package IOL.VippsEcommerce`
 
 The service targets net5.0. \
 [Nuget page](https://www.nuget.org/packages/IOL.VippsEcommerce/)

@@ -5,7 +5,7 @@ Implements https://vippsas.github.io/vipps-ecom-api/, more or less (see [IVippsE
 
 The service targets net5.0. \
 [Nuget page](https://nuget.org/packages/IOL.VippsEcommerce/)
-[Fuget page](https://fuget.org/packages/IOL.VippsEcommerce/)
+[![IOL.VippsEcommerce on fuget.org](https://www.fuget.org/packages/IOL.VippsEcommerce/badge.svg)](https://www.fuget.org/packages/IOL.VippsEcommerce)
 
 ## Configuration
 

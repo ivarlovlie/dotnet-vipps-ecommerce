@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOL.VippsEcommerce", "IOL.V
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOL.VippsEcommerce.Client", "IOL.VippsEcommerce.Client\IOL.VippsEcommerce.Client.csproj", "{A9D97F08-B3F6-42B0-81A8-6856E56C7582}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOL.VippsEcommerce.Tests", "IOL.VippsEcommerce.Tests\IOL.VippsEcommerce.Tests.csproj", "{1212AFB0-3AE4-4FBE-9DA0-A78445838C7C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{A9D97F08-B3F6-42B0-81A8-6856E56C7582}.Release|x64.Build.0 = Release|Any CPU
 		{A9D97F08-B3F6-42B0-81A8-6856E56C7582}.Release|x86.ActiveCfg = Release|Any CPU
 		{A9D97F08-B3F6-42B0-81A8-6856E56C7582}.Release|x86.Build.0 = Release|Any CPU
+		{1212AFB0-3AE4-4FBE-9DA0-A78445838C7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1212AFB0-3AE4-4FBE-9DA0-A78445838C7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1212AFB0-3AE4-4FBE-9DA0-A78445838C7C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1212AFB0-3AE4-4FBE-9DA0-A78445838C7C}.Debug|x64.Build.0 = Debug|Any CPU
+		{1212AFB0-3AE4-4FBE-9DA0-A78445838C7C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1212AFB0-3AE4-4FBE-9DA0-A78445838C7C}.Debug|x86.Build.0 = Debug|Any CPU
+		{1212AFB0-3AE4-4FBE-9DA0-A78445838C7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1212AFB0-3AE4-4FBE-9DA0-A78445838C7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1212AFB0-3AE4-4FBE-9DA0-A78445838C7C}.Release|x64.ActiveCfg = Release|Any CPU
+		{1212AFB0-3AE4-4FBE-9DA0-A78445838C7C}.Release|x64.Build.0 = Release|Any CPU
+		{1212AFB0-3AE4-4FBE-9DA0-A78445838C7C}.Release|x86.ActiveCfg = Release|Any CPU
+		{1212AFB0-3AE4-4FBE-9DA0-A78445838C7C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

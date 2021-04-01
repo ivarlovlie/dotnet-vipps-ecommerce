@@ -41,36 +41,18 @@ namespace IOL.VippsEcommerce
 			IOptions<VippsConfiguration> options
 		) {
 			Configuration = options.Value;
+			Configuration.Verify();
 			var vippsApiUrl = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_API_URL);
-			if (vippsApiUrl.IsNullOrWhiteSpace()) {
-				throw new ArgumentException("VippsEcommerceService: Api url is not provided in configuration.");
-			}
-
 			client.BaseAddress = new Uri(vippsApiUrl);
 			_client = client;
 			_logger = logger;
-
 			_vippsClientId = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_CLIENT_ID);
-			if (_vippsClientId.IsNullOrWhiteSpace()) {
-				throw new ArgumentException("VippsEcommerceService: Client id is not provided in configuration.");
-			}
-
 			_vippsClientSecret = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_CLIENT_SECRET);
-			if (_vippsClientSecret.IsNullOrWhiteSpace()) {
-				throw new ArgumentException("VippsEcommerceService: Client secret is not provided in configuration.");
-			}
-
-			var primarySubscriptionKey =
-				Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_SUBSCRIPTION_KEY_PRIMARY);
-			var secondarySubscriptionKey =
-				Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_SUBSCRIPTION_KEY_SECONDARY);
-			if (primarySubscriptionKey.IsNullOrWhiteSpace() && secondarySubscriptionKey.IsNullOrWhiteSpace()) {
-				throw new
-					ArgumentException("VippsEcommerceService: Neither primary nor secondary subscription key was provided in configuration.");
-			}
-
 			client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key",
-			                                 primarySubscriptionKey ?? secondarySubscriptionKey);
+			                                 Configuration.GetValue(VippsConfigurationKeyNames
+				                                                        .VIPPS_SUBSCRIPTION_KEY_PRIMARY)
+			                                 ?? Configuration.GetValue(VippsConfigurationKeyNames
+				                                                           .VIPPS_SUBSCRIPTION_KEY_SECONDARY));
 
 			var msn = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_MSN);
 			if (msn.IsPresent()) {

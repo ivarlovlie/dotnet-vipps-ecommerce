@@ -122,6 +122,34 @@ namespace IOL.VippsEcommerce.Models
 			}
 		}
 
+		/// <summary>
+		/// Ensure that the configuration can be used to issue requests to the vipps api.
+		/// <exception cref="ArgumentNullException">Throws if a required value is null or whitespace.</exception>
+		/// </summary>
+		public void Verify() {
+			if (GetValue(VippsConfigurationKeyNames.VIPPS_API_URL).IsNullOrWhiteSpace()) {
+				throw new ArgumentNullException(VippsConfigurationKeyNames.VIPPS_API_URL,
+				                                "VippsEcommerceService: VIPPS_API_URL is not provided in configuration.");
+			}
+
+			if (GetValue(VippsConfigurationKeyNames.VIPPS_CLIENT_ID).IsNullOrWhiteSpace()) {
+				throw new ArgumentNullException(VippsConfigurationKeyNames.VIPPS_CLIENT_ID,
+				                                "VippsEcommerceService: VIPPS_CLIENT_ID is not provided in configuration.");
+			}
+
+			if (GetValue(VippsConfigurationKeyNames.VIPPS_CLIENT_SECRET).IsNullOrWhiteSpace()) {
+				throw new ArgumentNullException(VippsConfigurationKeyNames.VIPPS_CLIENT_SECRET,
+				                                "VippsEcommerceService: VIPPS_CLIENT_SECRET is not provided in configuration.");
+			}
+
+			if (GetValue(VippsConfigurationKeyNames.VIPPS_SUBSCRIPTION_KEY_PRIMARY).IsNullOrWhiteSpace()
+			    && GetValue(VippsConfigurationKeyNames.VIPPS_SUBSCRIPTION_KEY_SECONDARY).IsNullOrWhiteSpace()) {
+				throw new ArgumentNullException(VippsConfigurationKeyNames.VIPPS_SUBSCRIPTION_KEY_PRIMARY
+				                                + VippsConfigurationKeyNames.VIPPS_SUBSCRIPTION_KEY_SECONDARY,
+				                                "VippsEcommerceService: Neither VIPPS_SUBSCRIPTION_KEY_PRIMARY nor VIPPS_SUBSCRIPTION_KEY_SECONDARY was provided in configuration.");
+			}
+		}
+
 		private string GetValueFromObject(string key) {
 			foreach (var prop in typeof(VippsConfiguration).GetProperties()) {
 				foreach (var attribute in prop.CustomAttributes) {

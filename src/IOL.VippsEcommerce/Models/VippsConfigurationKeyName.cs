@@ -2,7 +2,8 @@ using System;
 
 namespace IOL.VippsEcommerce.Models
 {
-	sealed class VippsConfigurationKeyName : Attribute
+	[AttributeUsage(AttributeTargets.Property)]
+	internal sealed class VippsConfigurationKeyName : Attribute
 	{
 		/// <summary>
 		/// Specifies a name for this configuration value.

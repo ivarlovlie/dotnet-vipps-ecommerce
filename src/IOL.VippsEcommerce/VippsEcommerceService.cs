@@ -24,10 +24,15 @@ namespace IOL.VippsEcommerce
 		private readonly string _vippsClientSecret;
 		private readonly string _vippsMsn;
 		private readonly string _cacheEncryptionKey;
-		private readonly string _cacheFileDirectoryPath;
+		private readonly string _cacheDirectoryPath;
+
+		private readonly JsonSerializerOptions _requestJsonSerializerOptions = new() {
+			IgnoreNullValues = true
+		};
 
 		private const string VIPPS_CACHE_FILE_NAME = "vipps_ecommerce_credentials.json";
-		private string CacheFilePath => Path.Combine(_cacheFileDirectoryPath, VIPPS_CACHE_FILE_NAME);
+		private string CacheFilePath => Path.Combine(_cacheDirectoryPath, VIPPS_CACHE_FILE_NAME);
+
 		public VippsConfiguration Configuration { get; }
 
 		public VippsEcommerceService(
@@ -94,13 +99,13 @@ namespace IOL.VippsEcommerce
 			}
 
 			_cacheEncryptionKey = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_CACHE_KEY);
-			_cacheFileDirectoryPath = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_CACHE_PATH);
-			if (_cacheFileDirectoryPath.IsPresent()) {
-				if (!_cacheFileDirectoryPath.IsDirectoryWritable()) {
+			_cacheDirectoryPath = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_CACHE_PATH);
+			if (_cacheDirectoryPath.IsPresent()) {
+				if (!_cacheDirectoryPath.IsDirectoryWritable()) {
 					_logger.LogError("Could not write to cache file directory ("
-					                 + _cacheFileDirectoryPath
+					                 + _cacheDirectoryPath
 					                 + "). Disabling caching.");
-					_cacheFileDirectoryPath = default;
+					_cacheDirectoryPath = default;
 					_cacheEncryptionKey = default;
 				}
 			}
@@ -120,7 +125,7 @@ namespace IOL.VippsEcommerce
 			CancellationToken ct = default
 		) {
 			if (!forceRefresh) {
-				if (_cacheFileDirectoryPath.IsPresent() && File.Exists(CacheFilePath)) {
+				if (_cacheDirectoryPath.IsPresent() && File.Exists(CacheFilePath)) {
 					var fileContents = await File.ReadAllTextAsync(CacheFilePath, ct);
 
 					if (fileContents.IsPresent()) {
@@ -167,7 +172,7 @@ namespace IOL.VippsEcommerce
 				response.EnsureSuccessStatusCode();
 				var credentials = await response.Content.ReadAsStringAsync(ct);
 
-				if (_cacheFileDirectoryPath.IsPresent()) {
+				if (_cacheDirectoryPath.IsPresent()) {
 					await File.WriteAllTextAsync(CacheFilePath,
 					                             _cacheEncryptionKey.IsPresent()
 						                             ? credentials.EncryptWithAes(_cacheEncryptionKey)
@@ -208,9 +213,7 @@ namespace IOL.VippsEcommerce
 
 			var response = await _client.PostAsJsonAsync("ecomm/v2/payments",
 			                                             payload,
-			                                             new JsonSerializerOptions {
-				                                             IgnoreNullValues = true
-			                                             },
+			                                             _requestJsonSerializerOptions,
 			                                             ct);
 
 			try {
@@ -268,9 +271,7 @@ namespace IOL.VippsEcommerce
 
 			var response = await _client.PostAsJsonAsync("ecomm/v2/payments/" + orderId + "/capture",
 			                                             payload,
-			                                             new JsonSerializerOptions {
-				                                             IgnoreNullValues = true
-			                                             },
+			                                             _requestJsonSerializerOptions,
 			                                             ct);
 
 			try {
@@ -324,9 +325,7 @@ namespace IOL.VippsEcommerce
 
 			var response = await _client.PutAsJsonAsync("ecomm/v2/payments/" + orderId + "/cancel",
 			                                            payload,
-			                                            new JsonSerializerOptions {
-				                                            IgnoreNullValues = true
-			                                            },
+			                                            _requestJsonSerializerOptions,
 			                                            ct);
 
 			try {
@@ -379,9 +378,7 @@ namespace IOL.VippsEcommerce
 
 			var response = await _client.PutAsJsonAsync("ecomm/v2/payments/" + orderId + "/authorize",
 			                                            payload,
-			                                            new JsonSerializerOptions {
-				                                            IgnoreNullValues = true
-			                                            },
+			                                            _requestJsonSerializerOptions,
 			                                            ct);
 
 			try {
@@ -438,9 +435,7 @@ namespace IOL.VippsEcommerce
 
 			var response = await _client.PostAsJsonAsync("ecomm/v2/payments/" + orderId + "/refund",
 			                                             payload,
-			                                             new JsonSerializerOptions {
-				                                             IgnoreNullValues = true
-			                                             },
+			                                             _requestJsonSerializerOptions,
 			                                             ct);
 			try {
 				response.EnsureSuccessStatusCode();
@@ -491,9 +486,7 @@ namespace IOL.VippsEcommerce
 			var response =
 				await _client.PostAsJsonAsync("ecomm/v2/integration-test/payments/" + orderId + "/approve",
 				                              payload,
-				                              new JsonSerializerOptions {
-					                              IgnoreNullValues = true
-				                              },
+				                              _requestJsonSerializerOptions,
 				                              ct);
 
 			try {

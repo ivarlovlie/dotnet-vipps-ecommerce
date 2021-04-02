@@ -92,7 +92,7 @@ namespace IOL.VippsEcommerce
 				}
 			}
 
-			_logger.LogInformation("VippsEcommerceService was initialized with api url: " + vippsApiUrl);
+			_logger.LogInformation("VippsEcommerceService was successfully initialised with api url: " + vippsApiUrl);
 		}
 
 		/// <summary>
@@ -165,8 +165,21 @@ namespace IOL.VippsEcommerce
 				_logger.LogDebug("VippsEcommerceService: Got tokens from " + requestMessage.RequestUri);
 				return JsonSerializer.Deserialize<VippsAuthorizationTokenResponse>(credentials);
 			} catch (Exception e) {
+				var exception =
+					new VippsRequestException("Vipps get token request returned unsuccessfully.", e);
+				if (e is HttpRequestException) {
+					try {
+						exception.ErrorResponse =
+							await response.Content.ReadFromJsonAsync<VippsErrorResponse>(cancellationToken: ct);
+						_logger.LogError("ErrorResponse: " + JsonSerializer.Serialize(response.Content));
+					} catch (Exception e1) {
+						_logger.LogError("Unknown ErrorResponse: " + JsonSerializer.Serialize(response.Content));
+						Console.WriteLine(e1);
+					}
+				}
+
 				Console.WriteLine(e);
-				return default;
+				throw exception;
 			}
 		}
 

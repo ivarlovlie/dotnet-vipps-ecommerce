@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Go to tests folder
-      run: pushd ./src/IOL.VippsEcommerce.Tests
+      run: cd src/IOL.VippsEcommerce.Tests
     - name: Restore dependencies
       run: dotnet restore
     - name: Build

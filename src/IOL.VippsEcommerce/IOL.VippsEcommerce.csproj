@@ -11,8 +11,8 @@
         <RepositoryType>git</RepositoryType>
         <PackageTags>dotnet;vipps-api</PackageTags>
         <TargetFramework>net5.0</TargetFramework>
-        <PackageVersion>1.0.7</PackageVersion>
-        <PackageReleaseNotes></PackageReleaseNotes>
+        <PackageVersion>1.0.8</PackageVersion>
+        <PackageReleaseNotes> Make configuration from DI-init optional </PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

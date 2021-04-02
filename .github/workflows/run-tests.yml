@@ -19,9 +19,11 @@ jobs:
         dotnet-version: 5.0.x
     - name: Go to tests folder
       run: cd src/IOL.VippsEcommerce.Tests
+    - name: pwd
+      run: pwd
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore IOL.VippsEcommerce.Tests.csproj
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore IOL.VippsEcommerce.Tests.csproj
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal IOL.VippsEcommerce.Tests.csproj

@@ -17,13 +17,9 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    - name: Go to tests folder
-      run: cd /home/runner/work/IOL.VippsEcommerce/IOL.VippsEcommerce/src/IOL.VippsEcommerce.Tests
-    - name: pwd
-      run: pwd
     - name: Restore dependencies
-      run: dotnet restore IOL.VippsEcommerce.Tests.csproj
+      run: dotnet restore src/IOL.VippsEcommerce.Tests/IOL.VippsEcommerce.Tests.csproj
     - name: Build
-      run: dotnet build --no-restore IOL.VippsEcommerce.Tests.csproj
+      run: dotnet build --no-restore src/IOL.VippsEcommerce.Tests/IOL.VippsEcommerce.Tests.csproj
     - name: Test
-      run: dotnet test --no-build --verbosity normal IOL.VippsEcommerce.Tests.csproj
+      run: dotnet test --no-build --verbosity normal src/IOL.VippsEcommerce.Tests/IOL.VippsEcommerce.Tests.csproj

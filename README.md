@@ -4,7 +4,7 @@ Implements https://vippsas.github.io/vipps-ecom-api/, more or less (see [IVippsE
 
 ![IOL.VippsEcommerce on nuget.org](https://img.shields.io/badge/target:-dotnet5.0-blue)
 [![IOL.VippsEcommerce on nuget.org](https://img.shields.io/nuget/v/IOL.VippsEcommerce)](https://www.nuget.org/packages/IOL.VippsEcommerce)
-[![IOL.VippsEcommerce on fuget.org](https://www.fuget.org/packages/IOL.VippsEcommerce/badge.svg)](https://www.fuget.org/packages/IOL.VippsEcommerce)
+([fuget](https://www.fuget.org/packages/IOL.VippsEcommerce))
 
 ## Configuration
 

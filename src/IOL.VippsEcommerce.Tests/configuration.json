@@ -1,0 +1,14 @@
+{
+  "ApiUrl": "",
+  "ClientId": "",
+  "ClientSecret": "",
+  "PrimarySubscriptionKey": "",
+  "SecondarySubscriptionKey": "",
+  "MerchantSerialNumber": "",
+  "SystemName": "",
+  "SystemVersion": "",
+  "SystemPluginName": "",
+  "SystemPluginVersion": "",
+  "CacheDirectoryPath": "",
+  "CacheEncryptionKey": ""
+}

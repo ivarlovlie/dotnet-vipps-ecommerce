@@ -15,10 +15,11 @@ tasks:
       wget https://dot.net/v1/dotnet-install.sh
       chmod +x dotnet-install.sh
       bash dotnet-install.sh -c 5.0
-      export PATH="$PATH:$HOME/.dotnet"
+  - display-dotnet-info: |
+      ./.dotnet/dotnet --info
   - restore: |
-      dotnet restore src/IOL.VippsEcommerce.Tests/IOL.VippsEcommerce.Tests.csproj
+      ./.dotnet/dotnet restore src/IOL.VippsEcommerce.Tests/IOL.VippsEcommerce.Tests.csproj
   - build: |
-      dotnet build --no-restore src/IOL.VippsEcommerce.Tests/IOL.VippsEcommerce.Tests.csproj
+      ./.dotnet/dotnet build --no-restore src/IOL.VippsEcommerce.Tests/IOL.VippsEcommerce.Tests.csproj
   - test: |
-      dotnet test --no-build --verbosity normal src/IOL.VippsEcommerce.Tests/IOL.VippsEcommerce.Tests.csproj
+      ./.dotnet/dotnet test --no-build --verbosity normal src/IOL.VippsEcommerce.Tests/IOL.VippsEcommerce.Tests.csproj

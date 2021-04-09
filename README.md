@@ -1,4 +1,4 @@
-Implements https://vippsas.github.io/vipps-ecom-api/, more or less (see [IVippsEcommerceService.cs](https://github.com/ivarlovlie/IOL.VippsEcommerce/blob/master/src/IOL.VippsEcommerce/IVippsEcommerceService.cs)).
+Implements https://vippsas.github.io/vipps-ecom-api/, more or less (see [IVippsEcommerceService.cs](https://git.sr.ht/~ivar/IOL.VippsEcommerce/tree/master/item/src/IOL.VippsEcommerce/VippsEcommerceService.cs)).
 
 `dotnet add package IOL.VippsEcommerce`
 
@@ -19,15 +19,15 @@ services.AddVippsEcommerceService(o => {
 });
 ```
 
-See [VippsConfiguration.cs](https://github.com/ivarlovlie/IOL.VippsEcommerce/blob/master/src/IOL.VippsEcommerce/Models/VippsConfiguration.cs) for available properties.
-You can configure how to get values with the `ConfigurationMode` property, valid modes is specified in [VippsConfigurationMode.cs](https://github.com/ivarlovlie/IOL.VippsEcommerce/blob/master/src/IOL.VippsEcommerce/Models/VippsConfigurationMode.cs), example:
+See [VippsConfiguration.cs](https://git.sr.ht/~ivar/IOL.VippsEcommerce/tree/master/item/src/IOL.VippsEcommerce/Models/VippsConfiguration.cs) for available properties.
+You can configure how to get values with the `ConfigurationMode` property, valid modes is specified in [VippsConfigurationMode.cs](https://git.sr.ht/~ivar/IOL.VippsEcommerce/tree/master/item/src/IOL.VippsEcommerce/Models/VippsConfigurationMode.cs), example:
 ```csharp
 services.AddVippsEcommerceService(o => {
 	o.ConfigurationMode = VippsConfigurationMode.ENVIRONMENT_THEN_OBJECT;
 });
 ```
 
-With the above example, the service will look for configuration values in the current environment using names specified in [VippsConfigurationKeyNames.cs](https://github.com/ivarlovlie/IOL.VippsEcommerce/blob/master/src/IOL.VippsEcommerce/Models/VippsConfigurationKeyNames.cs), then in the configuration object. The environment variable name for a given property is also specified in it's XML-documentation.
+With the above example, the service will look for configuration values in the current environment using names specified in [VippsConfigurationKeyNames.cs](https://git.sr.ht/~ivar/IOL.VippsEcommerce/tree/master/item/src/IOL.VippsEcommerce/Models/VippsConfigurationKeyNames.cs), then in the configuration object. The environment variable name for a given property is also specified in it's XML-documentation.
 
 
 > [Environment.GetEnvironmentVariable](https://docs.microsoft.com/en-us/dotnet/api/system.environment.getenvironmentvariable?view=net-5.0) is used to retrieve environment variables, that means that user-secrets and anything else than process-spesific variables (`VARIABLE=value dotnet YourBinary.dll`) does not register on Unix systems.

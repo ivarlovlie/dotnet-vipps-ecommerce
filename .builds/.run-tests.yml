@@ -16,12 +16,12 @@ tasks:
       chmod +x dotnet-install.sh
       bash dotnet-install.sh -c 5.0
   - display-dotnet-info: |
-      ./$HOME/.dotnet/dotnet --info
+      $HOME/.dotnet/dotnet --info
   - navigate-to-repo: |
       cd $HOME/IOL.VippsEcommerce
   - restore: |
-      ./$HOME/.dotnet/dotnet restore src/IOL.VippsEcommerce.Tests/IOL.VippsEcommerce.Tests.csproj
+      $HOME/.dotnet/dotnet restore src/IOL.VippsEcommerce.Tests/IOL.VippsEcommerce.Tests.csproj
   - build: |
-      ./$HOME/.dotnet/dotnet build --no-restore src/IOL.VippsEcommerce.Tests/IOL.VippsEcommerce.Tests.csproj
+      $HOME/.dotnet/dotnet build --no-restore src/IOL.VippsEcommerce.Tests/IOL.VippsEcommerce.Tests.csproj
   - test: |
-      ./$HOME/.dotnet/dotnet test --no-build --verbosity normal src/IOL.VippsEcommerce.Tests/IOL.VippsEcommerce.Tests.csproj
+      $HOME/.dotnet/dotnet test --no-build --verbosity normal src/IOL.VippsEcommerce.Tests/IOL.VippsEcommerce.Tests.csproj

@@ -1,9 +1,19 @@
 image: alpine/latest
 packages:
-  - dotnet
+  - bash
+  - icu-libs
+  - krb5-libs
+  - libgcc
+  - libintl
+  - libssl1.1
+  - libssl1.1
+  - zlib
 sources:
   - https://git.sr.ht/~ivar/IOL.VippsEcommerce
 tasks:
+  - install-dotnet: |
+      wget https://dot.net/v1/dotnet-install.sh
+      ./dotnet-install.sh -c 5.0
   - restore: |
       dotnet restore src/IOL.VippsEcommerce.Tests/IOL.VippsEcommerce.Tests.csproj
   - build: |

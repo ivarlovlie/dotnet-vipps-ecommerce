@@ -5,9 +5,9 @@
         <Authors>Ivar Løvlie</Authors>
         <Description>Dotnet classlib for communicating with the vipps e-commerce api.</Description>
         <Summary>Dotnet classlib for communicating with the vipps e-commerce api.</Summary>
-        <PackageProjectUrl>https://github.com/ivarlovlie/IOL.VippsEcommerce</PackageProjectUrl>
-        <PackageLicenseUrl>https://github.com/ivarlovlie/IOL.VippsEcommerce/blob/master/LICENSE</PackageLicenseUrl>
-        <RepositoryUrl>https://github.com/ivarlovlie/IOL.VippsEcommerce</RepositoryUrl>
+        <PackageProjectUrl>https://git.sr.ht/~ivar/IOL.VippsEcommerce</PackageProjectUrl>
+        <PackageLicenseUrl>https://git.sr.ht/~ivar/IOL.VippsEcommerce/tree/master/item/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://git.sr.ht/~ivar/IOL.VippsEcommerce</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>dotnet;vipps-api</PackageTags>
         <TargetFramework>net5.0</TargetFramework>

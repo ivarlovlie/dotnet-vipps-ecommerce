@@ -42,3 +42,4 @@ services.AddVippsEcommerceService(o => {
 	o.CacheDirectoryPath = "/tmp/vippsecom"; // path to a directory that the executing process has write-access to.
 });
 ```
+

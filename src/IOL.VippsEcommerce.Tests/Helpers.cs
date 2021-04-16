@@ -1,6 +1,4 @@
 using System;
-using System.Net;
-using System.Text.Json;
 using IOL.VippsEcommerce.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Sdk;

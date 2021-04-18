@@ -1,5 +1,4 @@
 using IOL.VippsEcommerce.Models;
-using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using Xunit.Abstractions;
 

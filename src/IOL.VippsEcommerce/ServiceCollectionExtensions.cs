@@ -13,13 +13,17 @@ namespace IOL.VippsEcommerce
 		/// <param name="configuration"></param>
 		/// <returns></returns>
 		public static IServiceCollection AddVippsEcommerceService(
-			this IServiceCollection services,
-			Action<VippsConfiguration> configuration
+				this IServiceCollection services,
+				Action<VippsConfiguration> configuration
 		) {
-			if (services == null)
+			if (services == null) {
 				throw new ArgumentNullException(nameof(services));
-			if (configuration == null)
+			}
+
+			if (configuration == null) {
 				throw new ArgumentNullException(nameof(configuration));
+			}
+
 			services.Configure(configuration);
 			services.AddHttpClient<IVippsEcommerceService, VippsEcommerceService>();
 			services.AddScoped<IVippsEcommerceService, VippsEcommerceService>();
@@ -31,13 +35,12 @@ namespace IOL.VippsEcommerce
 		/// </summary>
 		/// <param name="services">Servicecollection to add VippsEcommerceService to.</param>
 		/// <returns></returns>
-		public static IServiceCollection AddVippsEcommerceService(
-			this IServiceCollection services
-		) {
-			if (services == null)
+		public static IServiceCollection AddVippsEcommerceService(this IServiceCollection services) {
+			if (services == null) {
 				throw new ArgumentNullException(nameof(services));
-			services.Configure(new Action<VippsConfiguration>(o => o.ConfigurationMode =
-																  VippsConfigurationMode.ONLY_ENVIRONMENT));
+			}
+
+			services.Configure(new Action<VippsConfiguration>(o => o.ConfigurationMode = VippsConfigurationMode.ONLY_ENVIRONMENT));
 			services.AddHttpClient<IVippsEcommerceService, VippsEcommerceService>();
 			services.AddScoped<IVippsEcommerceService, VippsEcommerceService>();
 			return services;

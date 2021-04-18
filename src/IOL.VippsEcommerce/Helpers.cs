@@ -16,10 +16,9 @@ namespace IOL.VippsEcommerce
 
 		public static bool IsDirectoryWritable(this string dirPath, bool throwIfFails = false) {
 			try {
-				using (var fs = File.Create(
-				                            Path.Combine(dirPath, Path.GetRandomFileName()),
-				                            1,
-				                            FileOptions.DeleteOnClose)
+				using (var fs = File.Create(Path.Combine(dirPath, Path.GetRandomFileName()),
+											1,
+											FileOptions.DeleteOnClose)
 				) { }
 
 				return true;
@@ -41,7 +40,7 @@ namespace IOL.VippsEcommerce
 
 			using var encryptor = aes.CreateEncryptor(key, iv);
 			var cipherText = encryptor
-				.TransformFinalBlock(plainText, 0, plainText.Length);
+					.TransformFinalBlock(plainText, 0, plainText.Length);
 
 			var result = new byte[iv.Length + cipherText.Length];
 			iv.CopyTo(result, 0);
@@ -67,7 +66,7 @@ namespace IOL.VippsEcommerce
 
 			using var decryptor = aes.CreateDecryptor(key, iv);
 			var decryptedBytes = decryptor
-				.TransformFinalBlock(cipherText, 0, cipherText.Length);
+					.TransformFinalBlock(cipherText, 0, cipherText.Length);
 			return Encoding.UTF8.GetString(decryptedBytes);
 		}
 

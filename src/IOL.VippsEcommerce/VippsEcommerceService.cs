@@ -27,7 +27,7 @@ namespace IOL.VippsEcommerce
 		private readonly string _cacheDirectoryPath;
 
 		private readonly JsonSerializerOptions _requestJsonSerializerOptions = new() {
-			IgnoreNullValues = true
+				IgnoreNullValues = true
 		};
 
 		private const string VIPPS_CACHE_FILE_NAME = "vipps_ecommerce_credentials.json";
@@ -36,52 +36,50 @@ namespace IOL.VippsEcommerce
 		public VippsConfiguration Configuration { get; }
 
 		public VippsEcommerceService(
-			HttpClient client,
-			ILogger<VippsEcommerceService> logger,
-			IOptions<VippsConfiguration> options
+				HttpClient client,
+				ILogger<VippsEcommerceService> logger,
+				IOptions<VippsConfiguration> options
 		) {
 			Configuration = options.Value;
 			Configuration.Verify();
-			var vippsApiUrl = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_API_URL);
+			var vippsApiUrl = Configuration.GetValue(VippsConfigurationKeyNames.API_URL);
 			client.BaseAddress = new Uri(vippsApiUrl);
 			_client = client;
 			_logger = logger;
-			_vippsClientId = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_CLIENT_ID);
-			_vippsClientSecret = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_CLIENT_SECRET);
+			_vippsClientId = Configuration.GetValue(VippsConfigurationKeyNames.CLIENT_ID);
+			_vippsClientSecret = Configuration.GetValue(VippsConfigurationKeyNames.CLIENT_SECRET);
 			client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key",
-											 Configuration.GetValue(VippsConfigurationKeyNames
-																		.VIPPS_SUBSCRIPTION_KEY_PRIMARY)
-											 ?? Configuration.GetValue(VippsConfigurationKeyNames
-																		   .VIPPS_SUBSCRIPTION_KEY_SECONDARY));
+											 Configuration.GetValue(VippsConfigurationKeyNames.SUBSCRIPTION_KEY_PRIMARY)
+											 ?? Configuration.GetValue(VippsConfigurationKeyNames.SUBSCRIPTION_KEY_SECONDARY));
 
-			var msn = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_MSN);
+			var msn = Configuration.GetValue(VippsConfigurationKeyNames.MSN);
 			if (msn.IsPresent()) {
 				client.DefaultRequestHeaders.Add("Merchant-Serial-Number", msn);
 				_vippsMsn = msn;
 			}
 
-			var systemName = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_SYSTEM_NAME);
+			var systemName = Configuration.GetValue(VippsConfigurationKeyNames.SYSTEM_NAME);
 			if (systemName.IsPresent()) {
 				client.DefaultRequestHeaders.Add("Vipps-System-Name", systemName);
 			}
 
-			var systemVersion = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_SYSTEM_VERSION);
+			var systemVersion = Configuration.GetValue(VippsConfigurationKeyNames.SYSTEM_VERSION);
 			if (systemVersion.IsPresent()) {
 				client.DefaultRequestHeaders.Add("Vipps-System-Version", systemVersion);
 			}
 
-			var systemPluginName = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_SYSTEM_PLUGIN_NAME);
+			var systemPluginName = Configuration.GetValue(VippsConfigurationKeyNames.SYSTEM_PLUGIN_NAME);
 			if (systemPluginName.IsPresent()) {
 				client.DefaultRequestHeaders.Add("Vipps-System-Plugin-Name", systemPluginName);
 			}
 
-			var systemPluginVersion = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_SYSTEM_PLUGIN_VERSION);
+			var systemPluginVersion = Configuration.GetValue(VippsConfigurationKeyNames.SYSTEM_PLUGIN_VERSION);
 			if (systemPluginVersion.IsPresent()) {
 				client.DefaultRequestHeaders.Add("Vipps-System-Plugin-Version", systemPluginVersion);
 			}
 
-			_cacheEncryptionKey = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_CACHE_KEY);
-			_cacheDirectoryPath = Configuration.GetValue(VippsConfigurationKeyNames.VIPPS_CACHE_PATH);
+			_cacheEncryptionKey = Configuration.GetValue(VippsConfigurationKeyNames.CACHE_KEY);
+			_cacheDirectoryPath = Configuration.GetValue(VippsConfigurationKeyNames.CACHE_PATH);
 			if (_cacheDirectoryPath.IsPresent()) {
 				if (!_cacheDirectoryPath.IsDirectoryWritable()) {
 					_logger.LogError("Could not write to cache file directory ("
@@ -105,8 +103,8 @@ namespace IOL.VippsEcommerce
 		/// <returns></returns>
 		/// <exception cref="HttpRequestException">Throws if the api returns unsuccessfully</exception>
 		private async Task<VippsAuthorizationTokenResponse> GetAuthorizationTokenAsync(
-			bool forceRefresh = false,
-			CancellationToken ct = default
+				bool forceRefresh = false,
+				CancellationToken ct = default
 		) {
 			if (!forceRefresh && _cacheDirectoryPath.IsPresent() && File.Exists(CacheFilePath)) {
 				var fileContents = await File.ReadAllTextAsync(CacheFilePath, ct);
@@ -120,7 +118,7 @@ namespace IOL.VippsEcommerce
 							try {
 								var decryptedContents = fileContents.DecryptWithAes(_cacheEncryptionKey);
 								credentials =
-									JsonSerializer.Deserialize<VippsAuthorizationTokenResponse>(decryptedContents);
+										JsonSerializer.Deserialize<VippsAuthorizationTokenResponse>(decryptedContents);
 							} catch {
 								// ignored
 							}
@@ -141,15 +139,15 @@ namespace IOL.VippsEcommerce
 			}
 
 			var requestMessage = new HttpRequestMessage {
-				Headers = {
-					{
-						"client_id", _vippsClientId
-					}, {
-						"client_secret", _vippsClientSecret
+					Headers = {
+							{
+									"client_id", _vippsClientId
+							}, {
+									"client_secret", _vippsClientSecret
+							},
 					},
-				},
-				RequestUri = new Uri(_client.BaseAddress + "accesstoken/get"),
-				Method = HttpMethod.Post
+					RequestUri = new Uri(_client.BaseAddress + "accesstoken/get"),
+					Method = HttpMethod.Post
 			};
 			var response = await _client.SendAsync(requestMessage, ct);
 
@@ -160,8 +158,8 @@ namespace IOL.VippsEcommerce
 				if (_cacheDirectoryPath.IsPresent()) {
 					await File.WriteAllTextAsync(CacheFilePath,
 												 _cacheEncryptionKey.IsPresent()
-													 ? credentials.EncryptWithAes(_cacheEncryptionKey)
-													 : credentials,
+														 ? credentials.EncryptWithAes(_cacheEncryptionKey)
+														 : credentials,
 												 ct);
 				}
 
@@ -175,7 +173,7 @@ namespace IOL.VippsEcommerce
 
 				try {
 					exception.ErrorResponse =
-						await response.Content.ReadFromJsonAsync<VippsErrorResponse>(cancellationToken: ct);
+							await response.Content.ReadFromJsonAsync<VippsErrorResponse>(cancellationToken: ct);
 					_logger.LogError(nameof(GetAuthorizationTokenAsync)
 									 + " Api error response: "
 									 + JsonSerializer.Serialize(response.Content));
@@ -201,13 +199,13 @@ namespace IOL.VippsEcommerce
 		/// <returns></returns>
 		/// <exception cref="HttpRequestException">Throws if the api returns unsuccessfully</exception>
 		public async Task<VippsInitiatePaymentResponse> InitiatePaymentAsync(
-			VippsInitiatePaymentRequest payload,
-			CancellationToken ct = default
+				VippsInitiatePaymentRequest payload,
+				CancellationToken ct = default
 		) {
 			if (_client.DefaultRequestHeaders.Authorization?.Parameter.IsNullOrWhiteSpace() ?? true) {
 				var credentials = await GetAuthorizationTokenAsync(false, ct);
 				_client.DefaultRequestHeaders.Authorization =
-					new AuthenticationHeaderValue("Bearer", credentials.AccessToken);
+						new AuthenticationHeaderValue("Bearer", credentials.AccessToken);
 			}
 
 			var response = await _client.PostAsJsonAsync("ecomm/v2/payments",
@@ -230,7 +228,7 @@ namespace IOL.VippsEcommerce
 
 				try {
 					exception.ErrorResponse =
-						await response.Content.ReadFromJsonAsync<VippsErrorResponse>(cancellationToken: ct);
+							await response.Content.ReadFromJsonAsync<VippsErrorResponse>(cancellationToken: ct);
 					_logger.LogError(nameof(InitiatePaymentAsync)
 									 + " Api error response: "
 									 + JsonSerializer.Serialize(response.Content));
@@ -254,20 +252,20 @@ namespace IOL.VippsEcommerce
 		/// <returns></returns>
 		/// <exception cref="HttpRequestException">Throws if the api returns unsuccessfully</exception>
 		public async Task<VippsPaymentActionResponse> CapturePaymentAsync(
-			string orderId,
-			VippsPaymentActionRequest payload,
-			CancellationToken ct = default
+				string orderId,
+				VippsPaymentActionRequest payload,
+				CancellationToken ct = default
 		) {
 			if (_client.DefaultRequestHeaders.Authorization?.Parameter.IsNullOrWhiteSpace() ?? true) {
 				var credentials = await GetAuthorizationTokenAsync(false, ct);
 				_client.DefaultRequestHeaders.Authorization =
-					new AuthenticationHeaderValue("Bearer", credentials.AccessToken);
+						new AuthenticationHeaderValue("Bearer", credentials.AccessToken);
 			}
 
 
 			if (payload.MerchantInfo?.MerchantSerialNumber.IsNullOrWhiteSpace() ?? false) {
 				payload.MerchantInfo = new TMerchantInfoPayment {
-					MerchantSerialNumber = _vippsMsn
+						MerchantSerialNumber = _vippsMsn
 				};
 			}
 
@@ -290,7 +288,7 @@ namespace IOL.VippsEcommerce
 
 				try {
 					exception.ErrorResponse =
-						await response.Content.ReadFromJsonAsync<VippsErrorResponse>(cancellationToken: ct);
+							await response.Content.ReadFromJsonAsync<VippsErrorResponse>(cancellationToken: ct);
 					_logger.LogError(nameof(CapturePaymentAsync)
 									 + " Api error response: "
 									 + JsonSerializer.Serialize(response.Content));
@@ -312,19 +310,19 @@ namespace IOL.VippsEcommerce
 		/// <returns></returns>
 		/// <exception cref="HttpRequestException">Throws if the api returns unsuccessfully</exception>
 		public async Task<VippsPaymentActionResponse> CancelPaymentAsync(
-			string orderId,
-			VippsPaymentActionRequest payload,
-			CancellationToken ct = default
+				string orderId,
+				VippsPaymentActionRequest payload,
+				CancellationToken ct = default
 		) {
 			if (_client.DefaultRequestHeaders.Authorization?.Parameter.IsNullOrWhiteSpace() ?? true) {
 				var credentials = await GetAuthorizationTokenAsync(false, ct);
 				_client.DefaultRequestHeaders.Authorization =
-					new AuthenticationHeaderValue("Bearer", credentials.AccessToken);
+						new AuthenticationHeaderValue("Bearer", credentials.AccessToken);
 			}
 
 			if (payload.MerchantInfo?.MerchantSerialNumber.IsNullOrWhiteSpace() ?? false) {
 				payload.MerchantInfo = new TMerchantInfoPayment {
-					MerchantSerialNumber = _vippsMsn
+						MerchantSerialNumber = _vippsMsn
 				};
 			}
 
@@ -347,7 +345,7 @@ namespace IOL.VippsEcommerce
 
 				try {
 					exception.ErrorResponse =
-						await response.Content.ReadFromJsonAsync<VippsErrorResponse>(cancellationToken: ct);
+							await response.Content.ReadFromJsonAsync<VippsErrorResponse>(cancellationToken: ct);
 					_logger.LogError(nameof(CancelPaymentAsync)
 									 + " Api error response: "
 									 + JsonSerializer.Serialize(response.Content));
@@ -367,19 +365,19 @@ namespace IOL.VippsEcommerce
 		/// <returns></returns>
 		/// <exception cref="HttpRequestException">Throws if the api returns unsuccessfully</exception>
 		public async Task<VippsPaymentActionResponse> AuthorizePaymentAsync(
-			string orderId,
-			VippsPaymentActionRequest payload,
-			CancellationToken ct = default
+				string orderId,
+				VippsPaymentActionRequest payload,
+				CancellationToken ct = default
 		) {
 			if (_client.DefaultRequestHeaders.Authorization?.Parameter.IsNullOrWhiteSpace() ?? true) {
 				var credentials = await GetAuthorizationTokenAsync(false, ct);
 				_client.DefaultRequestHeaders.Authorization =
-					new AuthenticationHeaderValue("Bearer", credentials.AccessToken);
+						new AuthenticationHeaderValue("Bearer", credentials.AccessToken);
 			}
 
 			if (payload.MerchantInfo?.MerchantSerialNumber.IsNullOrWhiteSpace() ?? false) {
 				payload.MerchantInfo = new TMerchantInfoPayment {
-					MerchantSerialNumber = _vippsMsn
+						MerchantSerialNumber = _vippsMsn
 				};
 			}
 
@@ -402,7 +400,7 @@ namespace IOL.VippsEcommerce
 
 				try {
 					exception.ErrorResponse =
-						await response.Content.ReadFromJsonAsync<VippsErrorResponse>(cancellationToken: ct);
+							await response.Content.ReadFromJsonAsync<VippsErrorResponse>(cancellationToken: ct);
 					_logger.LogError(nameof(AuthorizePaymentAsync)
 									 + " Api error response: "
 									 + JsonSerializer.Serialize(response.Content));
@@ -426,19 +424,19 @@ namespace IOL.VippsEcommerce
 		/// <returns></returns>
 		/// <exception cref="HttpRequestException">Throws if the api returns unsuccessfully</exception>
 		public async Task<VippsPaymentActionResponse> RefundPaymentAsync(
-			string orderId,
-			VippsPaymentActionRequest payload,
-			CancellationToken ct = default
+				string orderId,
+				VippsPaymentActionRequest payload,
+				CancellationToken ct = default
 		) {
 			if (_client.DefaultRequestHeaders.Authorization?.Parameter.IsNullOrWhiteSpace() ?? true) {
 				var credentials = await GetAuthorizationTokenAsync(false, ct);
 				_client.DefaultRequestHeaders.Authorization =
-					new AuthenticationHeaderValue("Bearer", credentials.AccessToken);
+						new AuthenticationHeaderValue("Bearer", credentials.AccessToken);
 			}
 
 			if (payload.MerchantInfo?.MerchantSerialNumber.IsNullOrWhiteSpace() ?? false) {
 				payload.MerchantInfo = new TMerchantInfoPayment {
-					MerchantSerialNumber = _vippsMsn
+						MerchantSerialNumber = _vippsMsn
 				};
 			}
 
@@ -460,7 +458,7 @@ namespace IOL.VippsEcommerce
 
 				try {
 					exception.ErrorResponse =
-						await response.Content.ReadFromJsonAsync<VippsErrorResponse>(cancellationToken: ct);
+							await response.Content.ReadFromJsonAsync<VippsErrorResponse>(cancellationToken: ct);
 					_logger.LogError(nameof(RefundPaymentAsync)
 									 + " Api error response: "
 									 + JsonSerializer.Serialize(response.Content));
@@ -483,22 +481,22 @@ namespace IOL.VippsEcommerce
 		/// <returns></returns>
 		/// <exception cref="HttpRequestException">Throws if the api returns unsuccessfully</exception>
 		public async Task<bool> ForceApprovePaymentAsync(
-			string orderId,
-			VippsForceApproveRequest payload,
-			CancellationToken ct = default
+				string orderId,
+				VippsForceApproveRequest payload,
+				CancellationToken ct = default
 		) {
 			if (_client.DefaultRequestHeaders.Authorization?.Parameter.IsNullOrWhiteSpace() ?? true) {
 				var credentials = await GetAuthorizationTokenAsync(false, ct);
 				_client.DefaultRequestHeaders.Authorization =
-					new AuthenticationHeaderValue("Bearer", credentials.AccessToken);
+						new AuthenticationHeaderValue("Bearer", credentials.AccessToken);
 			}
 
 
 			var response =
-				await _client.PostAsJsonAsync("ecomm/v2/integration-test/payments/" + orderId + "/approve",
-											  payload,
-											  _requestJsonSerializerOptions,
-											  ct);
+					await _client.PostAsJsonAsync("ecomm/v2/integration-test/payments/" + orderId + "/approve",
+												  payload,
+												  _requestJsonSerializerOptions,
+												  ct);
 
 			try {
 				response.EnsureSuccessStatusCode();
@@ -514,7 +512,7 @@ namespace IOL.VippsEcommerce
 
 				try {
 					exception.ErrorResponse =
-						await response.Content.ReadFromJsonAsync<VippsErrorResponse>(cancellationToken: ct);
+							await response.Content.ReadFromJsonAsync<VippsErrorResponse>(cancellationToken: ct);
 					_logger.LogError(nameof(ForceApprovePaymentAsync)
 									 + " Api error response: "
 									 + JsonSerializer.Serialize(response.Content));
@@ -533,13 +531,13 @@ namespace IOL.VippsEcommerce
 		/// <returns></returns>
 		/// <exception cref="HttpRequestException">Throws if the api returns unsuccessfully</exception>
 		public async Task<VippsGetPaymentDetailsResponse> GetPaymentDetailsAsync(
-			string orderId,
-			CancellationToken ct = default
+				string orderId,
+				CancellationToken ct = default
 		) {
 			if (_client.DefaultRequestHeaders.Authorization?.Parameter.IsNullOrWhiteSpace() ?? true) {
 				var credentials = await GetAuthorizationTokenAsync(false, ct);
 				_client.DefaultRequestHeaders.Authorization =
-					new AuthenticationHeaderValue("Bearer", credentials.AccessToken);
+						new AuthenticationHeaderValue("Bearer", credentials.AccessToken);
 			}
 
 			var response = await _client.GetAsync("ecomm/v2/payments/" + orderId + "/details", ct);
@@ -550,7 +548,7 @@ namespace IOL.VippsEcommerce
 								 + ": Successfully issued a request to "
 								 + response.RequestMessage?.RequestUri);
 				return await
-					response.Content.ReadFromJsonAsync<VippsGetPaymentDetailsResponse>(cancellationToken: ct);
+						response.Content.ReadFromJsonAsync<VippsGetPaymentDetailsResponse>(cancellationToken: ct);
 			} catch (Exception e) {
 				var exception = new VippsRequestException(nameof(GetPaymentDetailsAsync) + " failed.", e);
 				if (e is not HttpRequestException) {
@@ -559,7 +557,7 @@ namespace IOL.VippsEcommerce
 
 				try {
 					exception.ErrorResponse =
-						await response.Content.ReadFromJsonAsync<VippsErrorResponse>(cancellationToken: ct);
+							await response.Content.ReadFromJsonAsync<VippsErrorResponse>(cancellationToken: ct);
 					_logger.LogError(nameof(GetPaymentDetailsAsync)
 									 + " Api error response: "
 									 + JsonSerializer.Serialize(response.Content));

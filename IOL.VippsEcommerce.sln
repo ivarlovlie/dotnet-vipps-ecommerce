@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.6.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOL.VippsEcommerce", "IOL.VippsEcommerce\IOL.VippsEcommerce.csproj", "{21C501E7-F8B0-427D-88BD-21CD2460961B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOL.VippsEcommerce", "src\IOL.VippsEcommerce\IOL.VippsEcommerce.csproj", "{21C501E7-F8B0-427D-88BD-21CD2460961B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOL.VippsEcommerce.Client", "IOL.VippsEcommerce.Client\IOL.VippsEcommerce.Client.csproj", "{A9D97F08-B3F6-42B0-81A8-6856E56C7582}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOL.VippsEcommerce.Client", "src\IOL.VippsEcommerce.Client\IOL.VippsEcommerce.Client.csproj", "{A9D97F08-B3F6-42B0-81A8-6856E56C7582}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOL.VippsEcommerce.Tests", "IOL.VippsEcommerce.Tests\IOL.VippsEcommerce.Tests.csproj", "{1212AFB0-3AE4-4FBE-9DA0-A78445838C7C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOL.VippsEcommerce.Tests", "src\IOL.VippsEcommerce.Tests\IOL.VippsEcommerce.Tests.csproj", "{1212AFB0-3AE4-4FBE-9DA0-A78445838C7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

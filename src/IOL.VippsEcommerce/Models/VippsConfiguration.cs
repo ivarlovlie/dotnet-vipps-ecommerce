@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Extensions.Configuration;
 
 namespace IOL.VippsEcommerce.Models
 {
@@ -151,13 +152,14 @@ namespace IOL.VippsEcommerce.Models
 		}
 
 		private string GetValueFromEnvironment(string key) {
+			var config = new ConfigurationBuilder().AddEnvironmentVariables().Build();
 #if DEBUG
-			var value = Environment.GetEnvironmentVariable(key);
+			var value = config[key];
 			Console.WriteLine("Getting VippsConfiguration value for " + key + " from environment.");
 			Console.WriteLine("Key: " + key + " Value: " + value);
 			return value;
 #else
-			return Environment.GetEnvironmentVariable(key);
+			return config[key];
 #endif
 		}
 

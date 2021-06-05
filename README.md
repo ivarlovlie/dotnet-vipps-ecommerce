@@ -1,4 +1,4 @@
-Implements https://vippsas.github.io/vipps-ecom-api/, more or less (see [IVippsEcommerceService.cs](https://git.sr.ht/~ivar/IOL.VippsEcommerce/tree/master/item/src/IOL.VippsEcommerce/IVippsEcommerceService.cs)).
+Implements https://vippsas.github.io/vipps-ecom-api, more or less (see [IVippsEcommerceService.cs](https://git.sr.ht/~ivar/IOL.VippsEcommerce/tree/master/item/src/IOL.VippsEcommerce/IVippsEcommerceService.cs)).
 
 `dotnet add package IOL.VippsEcommerce`
 

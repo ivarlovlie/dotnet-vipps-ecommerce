@@ -99,89 +99,31 @@ namespace IOL.VippsEcommerce.Models
 		public string CacheEncryptionKey { get; set; }
 
 		/// <summary>
-		/// Specify how to retrieve configuration and/or in what order. Defaults to VippsConfigurationMode.ENVIRONMENT_THEN_OBJECT.
-		/// </summary>
-		public VippsConfigurationMode ConfigurationMode { get; set; } = VippsConfigurationMode.ENVIRONMENT_THEN_OBJECT;
-
-		/// <summary>
-		/// Get value from configuration, either from Dependency injection or from the environment.
-		/// </summary>
-		/// <param name="key">Configuration key.</param>
-		/// <returns>A string containing the configuration value.</returns>
-		public string GetValue(string key) {
-			switch (ConfigurationMode) {
-				case VippsConfigurationMode.ONLY_OBJECT:
-					return GetValueFromObject(key);
-				case VippsConfigurationMode.ONLY_ENVIRONMENT:
-					return GetValueFromEnvironment(key);
-				case VippsConfigurationMode.OBJECT_THEN_ENVIRONMENT:
-					return GetValueFromObject(key) ?? GetValueFromEnvironment(key);
-				case VippsConfigurationMode.ENVIRONMENT_THEN_OBJECT:
-					return GetValueFromEnvironment(key) ?? GetValueFromObject(key);
-				default:
-					return default;
-			}
-		}
-
-		/// <summary>
 		/// Ensure that the configuration can be used to issue requests to the vipps api.
 		/// <exception cref="ArgumentNullException">Throws if a required value is null or whitespace.</exception>
 		/// </summary>
 		public void Verify() {
-			if (GetValue(VippsConfigurationKeyNames.API_URL).IsNullOrWhiteSpace()) {
+			if (ApiUrl.IsNullOrWhiteSpace()) {
 				throw new ArgumentNullException(nameof(ApiUrl),
 												"VippsEcommerceService: ApiUrl is not provided in configuration.");
 			}
 
-			if (GetValue(VippsConfigurationKeyNames.CLIENT_ID).IsNullOrWhiteSpace()) {
+			if (ClientId.IsNullOrWhiteSpace()) {
 				throw new ArgumentNullException(nameof(ClientId),
 												"VippsEcommerceService: ClientId is not provided in configuration.");
 			}
 
-			if (GetValue(VippsConfigurationKeyNames.CLIENT_SECRET).IsNullOrWhiteSpace()) {
+			if (ClientSecret.IsNullOrWhiteSpace()) {
 				throw new ArgumentNullException(nameof(ClientSecret),
 												"VippsEcommerceService: ClientSecret is not provided in configuration.");
 			}
 
-			if (GetValue(VippsConfigurationKeyNames.SUBSCRIPTION_KEY_PRIMARY).IsNullOrWhiteSpace()
-				&& GetValue(VippsConfigurationKeyNames.SUBSCRIPTION_KEY_SECONDARY).IsNullOrWhiteSpace()) {
+			if (PrimarySubscriptionKey.IsNullOrWhiteSpace()
+				&& SecondarySubscriptionKey.IsNullOrWhiteSpace()) {
 				throw new ArgumentNullException(nameof(PrimarySubscriptionKey)
 												+ nameof(SecondarySubscriptionKey),
 												"VippsEcommerceService: Neither PrimarySubscriptionKey nor SecondarySubscriptionKey was provided in configuration.");
 			}
-		}
-
-		private string GetValueFromEnvironment(string key) {
-			var config = new ConfigurationBuilder().AddEnvironmentVariables().Build();
-#if DEBUG
-			var value = config[key];
-			Console.WriteLine("Getting VippsConfiguration value for " + key + " from environment.");
-			Console.WriteLine("Key: " + key + " Value: " + value);
-			return value;
-#else
-			return config[key];
-#endif
-		}
-
-		private string GetValueFromObject(string key) {
-			foreach (var prop in typeof(VippsConfiguration).GetProperties()) {
-				foreach (var attribute in prop.CustomAttributes) {
-					foreach (var argument in attribute.ConstructorArguments) {
-						if (argument.Value as string == key) {
-#if DEBUG
-							var value = prop.GetValue(this, null)?.ToString();
-							Console.WriteLine("Getting VippsConfiguration value for " + key + " from object.");
-							Console.WriteLine("Key: " + key + " Value: " + value);
-							return value;
-#else
-							return prop.GetValue(this, null)?.ToString();
-#endif
-						}
-					}
-				}
-			}
-
-			return default;
 		}
 	}
 }

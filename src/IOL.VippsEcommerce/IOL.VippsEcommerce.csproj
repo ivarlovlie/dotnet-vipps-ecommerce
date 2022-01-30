@@ -5,14 +5,14 @@
         <Authors>Ivar Løvlie</Authors>
         <Description>Dotnet classlib for communicating with the vipps e-commerce api.</Description>
         <Summary>Dotnet classlib for communicating with the vipps e-commerce api.</Summary>
-        <PackageProjectUrl>https://git.sr.ht/~ivar/IOL.VippsEcommerce</PackageProjectUrl>
-        <PackageLicenseUrl>https://git.sr.ht/~ivar/IOL.VippsEcommerce/tree/master/item/LICENSE</PackageLicenseUrl>
-        <RepositoryUrl>https://git.sr.ht/~ivar/IOL.VippsEcommerce</RepositoryUrl>
+        <PackageProjectUrl>https://git.ivarlovlie.no/dotnet-vipps-ecommerce/</PackageProjectUrl>
+        <PackageLicenseUrl>https://git.ivarlovlie.no/dotnet-vipps-ecommerce/tree/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://git.ivarlovlie.no/dotnet-vipps-ecommerce/</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>dotnet;vipps-api</PackageTags>
         <TargetFramework>net6.0</TargetFramework>
         <PackageVersion>2.0.0</PackageVersion>
-        <PackageReleaseNotes>Remove support for automatically getting configuration from environement variables.</PackageReleaseNotes>
+        <PackageReleaseNotes>Remove support for automatically getting configuration from environment variables.</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

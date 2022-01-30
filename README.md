@@ -1,11 +1,7 @@
-Implements https://vippsas.github.io/vipps-ecom-api , more or less (see [IVippsEcommerceService.cs](https://git.sr.ht/~ivar/IOL.VippsEcommerce/tree/master/item/src/IOL.VippsEcommerce/IVippsEcommerceService.cs)).
+Implements https://vippsas.github.io/vipps-ecom-api, more or less (see [IVippsEcommerceService.cs](https://git.ivarlovlie.no/dotnet-vipps-ecommerece/tree/src/IOL.VippsEcommerce/IVippsEcommerceService.cs)).
 
-`dotnet add package IOL.VippsEcommerce`
-
-[![builds.sr.ht status](https://builds.sr.ht/~ivar/IOL.VippsEcommerce/commits/.run-tests.yml.svg)](https://builds.sr.ht/~ivar/IOL.VippsEcommerce/commits/.run-tests.yml?)
-![IOL.VippsEcommerce on nuget.org](https://img.shields.io/badge/target-net5.0-blue)
-[![IOL.VippsEcommerce on nuget.org](https://img.shields.io/nuget/v/IOL.VippsEcommerce)](https://www.nuget.org/packages/IOL.VippsEcommerce)
-([fuget](https://www.fuget.org/packages/IOL.VippsEcommerce))
+Install: `dotnet add package IOL.VippsEcommerce`
+Nuget: https://www.nuget.org/packages/IOL.VippsEcommerce
 
 ## Configuration
 
@@ -19,11 +15,11 @@ services.AddVippsEcommerceService(o => {
 });
 ```
 
-See [VippsConfiguration.cs](https://git.sr.ht/~ivar/IOL.VippsEcommerce/tree/master/item/src/IOL.VippsEcommerce/Models/VippsConfiguration.cs) for available properties.
+See [VippsConfiguration.cs](https://git.ivarlovlie.no/dotnet-vipps-ecommerece/tree/src/IOL.VippsEcommerce/Models/VippsConfiguration.cs) for available properties.
 
 ## Caching
 
-The service can cache the credentials for api-access in a file with optional AES encryption, example:
+The service can cache the credentials for api access in a file with optional AES encryption, example:
 ```csharp
 services.AddVippsEcommerceService(o => {
 	o.CacheEncryptionKey = "randomstring"; // optional key for AES encryption, if omitted the cache will be readable json with your keys exposed and everything.

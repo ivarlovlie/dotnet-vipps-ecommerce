@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using IOL.VippsEcommerce.Models;
@@ -27,7 +28,7 @@ public class VippsEcommerceService : IVippsEcommerceService
 	private readonly string _cacheDirectoryPath;
 
 	private readonly JsonSerializerOptions _requestJsonSerializerOptions = new() {
-			IgnoreNullValues = true
+			DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
 	};
 
 	private const string VIPPS_CACHE_FILE_NAME = "vipps_ecommerce_credentials.json";

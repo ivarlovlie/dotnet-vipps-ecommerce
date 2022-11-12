@@ -9,7 +9,7 @@ packages:
   - libssl1.1
   - zlib
 sources:
-  - https://git.sr.ht/~ivar/IOL.VippsEcommerce
+  - https://git.ivar.systems/IOL.VippsEcommerce
 tasks:
   - install-dotnet: |
       wget https://dot.net/v1/dotnet-install.sh

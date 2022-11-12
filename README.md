@@ -1,11 +1,10 @@
-Implements https://vippsas.github.io/vipps-ecom-api, more or less (see [IVippsEcommerceService.cs](https://git.ivarlovlie.no/dotnet-vipps-ecommerce/tree/src/IOL.VippsEcommerce/IVippsEcommerceService.cs)).
+Implements https://vippsas.github.io/vipps-ecom-api, more or less (see [IVippsEcommerceService.cs](https://git.ivar.systems/dotnet-vipps-ecommerce/tree/src/IOL.VippsEcommerce/IVippsEcommerceService.cs)).
 
 Install: `dotnet add package IOL.VippsEcommerce`
 
-
 Nuget: [https://www.nuget.org/packages/IOL.VippsEcommerce](https://www.nuget.org/packages/IOL.VippsEcommerce)
 
-## Configuration
+## Setup
 
 Use Dependency Injection to add and configure the service with your values, minimal setup example:
 ```csharp
@@ -19,7 +18,7 @@ services.AddVippsEcommerceService(o => {
 
 See [VippsConfiguration.cs](https://git.ivarlovlie.no/dotnet-vipps-ecommerce/tree/src/IOL.VippsEcommerce/Models/VippsConfiguration.cs) for available properties.
 
-## Caching
+### Caching
 
 The service can cache the credentials for api access in a file with optional AES encryption, example:
 ```csharp

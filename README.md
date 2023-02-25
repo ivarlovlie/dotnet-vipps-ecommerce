@@ -1,4 +1,4 @@
-Implements https://vippsas.github.io/vipps-ecom-api, more or less (see [IVippsEcommerceService.cs](https://git.ivar.systems/dotnet-vipps-ecommerce/tree/src/IOL.VippsEcommerce/IVippsEcommerceService.cs)).
+Implements https://vippsas.github.io/vipps-ecom-api, more or less (see [IVippsEcommerceService.cs](/src/IOL.VippsEcommerce/IVippsEcommerceService.cs)).
 
 Install: `dotnet add package IOL.VippsEcommerce`
 
@@ -16,7 +16,7 @@ services.AddVippsEcommerceService(o => {
 });
 ```
 
-See [VippsConfiguration.cs](https://git.ivarlovlie.no/dotnet-vipps-ecommerce/tree/src/IOL.VippsEcommerce/Models/VippsConfiguration.cs) for available properties.
+See [VippsConfiguration.cs](/src/IOL.VippsEcommerce/Models/VippsConfiguration.cs) for available properties.
 
 ### Caching
 

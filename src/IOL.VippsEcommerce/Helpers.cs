@@ -16,15 +16,15 @@ internal static class Helpers
 
 	public static bool IsDirectoryWritable(this string dirPath, bool throwIfFails = false) {
 		try {
-			using (var fs = File.Create(Path.Combine(dirPath, Path.GetRandomFileName()),
-										1,
-										FileOptions.DeleteOnClose)
-				  ) { }
+            using var _ = File.Create(Path.Combine(dirPath, Path.GetRandomFileName()),
+                1,
+                FileOptions.DeleteOnClose);
 
 			return true;
 		} catch {
-			if (throwIfFails)
+            if (throwIfFails) {
 				throw;
+            }
 
 			return false;
 		}

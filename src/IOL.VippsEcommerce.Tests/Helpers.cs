@@ -1,7 +1,6 @@
 using System;
 using IOL.VippsEcommerce.Models;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit.Sdk;
 
 namespace IOL.VippsEcommerce.Tests;
 
@@ -13,7 +12,7 @@ public static class Helpers
 		var provider = services.BuildServiceProvider();
 		var vippsEcommerceService = provider.GetService<IVippsEcommerceService>();
 		if (vippsEcommerceService == default) {
-			throw new NullException(nameof(vippsEcommerceService));
+			throw new NullReferenceException(nameof(vippsEcommerceService));
 		}
 
 		return vippsEcommerceService;
